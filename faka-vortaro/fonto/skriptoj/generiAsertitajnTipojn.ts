@@ -18,6 +18,7 @@ import { Subtrahi } from './utiltipoj';
 /** Helper types derived from the asserted types */
 const ekstrajTipoj = `
 export type Rolo = NonNullable<Uzanto<0>["roloj"]>[number];
+export type AliajLingvoj = NonNullable<Vorto<0>["aliajLingvoj"]>[number];
 `;
 
 const asertitajTipojDosiernomo = "payload-asertitaj-tipoj.ts";

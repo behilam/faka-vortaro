@@ -32,7 +32,7 @@ export default buildConfig({
     url: process.env.DATABASE_URI!,
   }),
   serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL,
-  collections: [Vortoj, Uzantoj],
+  collections: [Uzantoj, Vortoj],
   typescript: {
     outputFile: path.resolve(__dirname, "../tipoj/payload-tipoj.ts"),
   },

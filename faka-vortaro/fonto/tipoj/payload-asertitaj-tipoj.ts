@@ -10,12 +10,31 @@ import { Subtrahi } from './utiltipoj';
 
 export interface Config {
   collections: {
-    vortoj: Vorto;
     uzantoj: Uzanto;
+    vortoj: Vorto;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
   globals: {};
+};
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "uzantoj".
+ */
+export interface Uzanto<Profundo extends number = 2> {
+  id: string;
+  nomo?: string | null;
+  roloj?: ('admin' | 'ulo')[] | null;
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  password: string | null;
 };
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -38,25 +57,6 @@ export interface Vorto<Profundo extends number = 2> {
     | null;
   updatedAt: string;
   createdAt: string;
-};
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "uzantoj".
- */
-export interface Uzanto<Profundo extends number = 2> {
-  id: string;
-  nomo?: string | null;
-  roloj?: ('admin' | 'ulo')[] | null;
-  updatedAt: string;
-  createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  password: string | null;
 };
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -96,3 +96,4 @@ export interface PayloadMigration<Profundo extends number = 2> {
 
 /* Derivated types */
 export type Rolo = NonNullable<Uzanto<0>["roloj"]>[number];
+export type AliajLingvoj = NonNullable<Vorto<0>["aliajLingvoj"]>[number];
