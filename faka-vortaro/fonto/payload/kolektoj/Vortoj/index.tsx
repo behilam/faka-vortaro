@@ -45,6 +45,7 @@ export const Vortoj: CollectionConfig = {
       label: "Nomo de la vorto",
       type: "text",
       required: true,
+      unique: true,
     },
     {
       name: "signifoj",
