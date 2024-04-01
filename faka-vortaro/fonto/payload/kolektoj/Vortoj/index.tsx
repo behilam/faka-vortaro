@@ -4,8 +4,13 @@ import type {
 } from "payload/dist/admin/components/forms/RowLabel/types";
 import type { CollectionConfig, Option } from "payload/types";
 
-import { AliaLingvo, Signifo, Vorto } from "../../../tipoj/payload-asertitaj-tipoj";
-import { Kol } from "../nomoj";
+import {
+  AliaLingvo,
+  Signifo,
+  SignifoEkzemplo,
+  Vorto,
+} from "../../../tipoj/payload-asertitaj-tipoj";
+import { Kol, KolGrupo } from "../nomoj";
 
 interface TRowLabelArgs<T extends RowLabelArgs["data"]> extends RowLabelArgs {
   data: T;
@@ -21,7 +26,8 @@ export const Vortoj: CollectionConfig = {
   slug: Kol.Vortoj,
   admin: {
     useAsTitle: "nomo" satisfies keyof Vorto<0>,
-    defaultColumns: ["nomo", "signifoj"] satisfies (keyof Vorto<0>)[],
+    defaultColumns: ["nomo", "signifoj", "aliajLingvoj", "createdAt"] satisfies (keyof Vorto<0>)[],
+    group: KolGrupo.Vortaro,
   },
   labels: {
     plural: "Vortoj",
@@ -43,14 +49,17 @@ export const Vortoj: CollectionConfig = {
     {
       name: "signifoj",
       type: "array",
+      labels: {
+        plural: "Signifoj",
+        singular: "Signifo",
+      },
       required: true,
       defaultValue: [{ signifo: "" }] satisfies Signifo[],
       admin: {
         components: {
           RowLabel: (props => {
-            const { signifo, transitivo } = (props as TRowLabelArgs<Partial<Signifo>>).data;
-            const transitivteksto = transitivo ? ` (${transitivo})` : "";
-            return `${signifo}${transitivteksto}`;
+            const { signifo } = (props as TRowLabelArgs<Partial<Signifo>>).data;
+            return signifo ?? "";
           }) satisfies RowLabelFunction,
         },
       },
@@ -61,15 +70,36 @@ export const Vortoj: CollectionConfig = {
           required: true,
         },
         {
-          name: "transitivo",
-          type: "select",
-          options: ["tr", "ntr", "x"],
+          name: "ekzemploj",
+          type: "array",
+          labels: {
+            plural: "Ekzemploj",
+            singular: "Ekzemplo",
+          },
+          admin: {
+            components: {
+              RowLabel: (props => {
+                const { ekzemplo } = (props as TRowLabelArgs<Partial<SignifoEkzemplo>>).data;
+                return ekzemplo ?? "";
+              }) satisfies RowLabelFunction,
+            },
+          },
+          fields: [
+            {
+              name: "ekzemplo",
+              type: "text",
+            },
+          ],
         },
       ],
     },
     {
       name: "aliajLingvoj",
       type: "array",
+      labels: {
+        plural: "Aliaj lingvoj",
+        singular: "Alia lingvo",
+      },
       admin: {
         components: {
           RowLabel: (props => {
@@ -91,6 +121,22 @@ export const Vortoj: CollectionConfig = {
           hasMany: true,
         },
       ],
+    },
+    {
+      name: "createdAt",
+      type: "date",
+      label: "Kreita je",
+      admin: {
+        hidden: true,
+      },
+    },
+    {
+      name: "updatedAt",
+      type: "date",
+      label: "Ĝisdatigita je",
+      admin: {
+        hidden: true,
+      },
     },
   ],
 };

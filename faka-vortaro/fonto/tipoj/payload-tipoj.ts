@@ -22,9 +22,9 @@ export interface Config {
 export interface Uzanto {
   id: string;
   nomo?: string | null;
-  roloj?: ('admin' | 'ulo')[] | null;
-  updatedAt: string;
   createdAt: string;
+  updatedAt: string;
+  roloj?: ('admin' | 'vortaristo')[] | null;
   email: string;
   resetPasswordToken?: string | null;
   resetPasswordExpiration?: string | null;
@@ -43,7 +43,12 @@ export interface Vorto {
   nomo: string;
   signifoj: {
     signifo: string;
-    transitivo?: ('tr' | 'ntr' | 'x') | null;
+    ekzemploj?:
+      | {
+          ekzemplo?: string | null;
+          id?: string | null;
+        }[]
+      | null;
     id?: string | null;
   }[];
   aliajLingvoj?:
@@ -53,8 +58,8 @@ export interface Vorto {
         id?: string | null;
       }[]
     | null;
-  updatedAt: string;
   createdAt: string;
+  updatedAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

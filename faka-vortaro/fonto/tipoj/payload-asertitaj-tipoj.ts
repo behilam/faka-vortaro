@@ -24,9 +24,9 @@ export interface Config {
 export interface Uzanto<Profundo extends number = 2> {
   id: string;
   nomo?: string | null;
-  roloj?: ('admin' | 'ulo')[] | null;
-  updatedAt: string;
   createdAt: string;
+  updatedAt: string;
+  roloj?: ('admin' | 'vortaristo')[] | null;
   email: string;
   resetPasswordToken?: string | null;
   resetPasswordExpiration?: string | null;
@@ -45,7 +45,12 @@ export interface Vorto<Profundo extends number = 2> {
   nomo: string;
   signifoj: {
     signifo: string;
-    transitivo?: ('tr' | 'ntr' | 'x') | null;
+    ekzemploj?:
+      | {
+          ekzemplo?: string | null;
+          id?: string | null;
+        }[]
+      | null;
     id?: string | null;
   }[];
   aliajLingvoj?:
@@ -55,8 +60,8 @@ export interface Vorto<Profundo extends number = 2> {
         id?: string | null;
       }[]
     | null;
-  updatedAt: string;
   createdAt: string;
+  updatedAt: string;
 };
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -97,4 +102,5 @@ export interface PayloadMigration<Profundo extends number = 2> {
 /* Derivated types */
 export type Rolo = NonNullable<Uzanto<0>["roloj"]>[number];
 export type Signifo = NonNullable<Vorto<0>["signifoj"]>[number];
+export type SignifoEkzemplo = NonNullable<Signifo["ekzemploj"]>[number];
 export type AliaLingvo = NonNullable<Vorto<0>["aliajLingvoj"]>[number];

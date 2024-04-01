@@ -19,6 +19,7 @@ import { Subtrahi } from './utiltipoj';
 const ekstrajTipoj = `
 export type Rolo = NonNullable<Uzanto<0>["roloj"]>[number];
 export type Signifo = NonNullable<Vorto<0>["signifoj"]>[number];
+export type SignifoEkzemplo = NonNullable<Signifo["ekzemploj"]>[number];
 export type AliaLingvo = NonNullable<Vorto<0>["aliajLingvoj"]>[number];
 `;
 

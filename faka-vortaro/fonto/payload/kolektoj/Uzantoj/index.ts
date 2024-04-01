@@ -1,6 +1,6 @@
 import type { CollectionConfig } from "payload/types";
 
-import { Kol } from "../nomoj";
+import { Kol, KolGrupo } from "../nomoj";
 import { administrantoj } from "../alireblo/ajn";
 import { Rolo, Uzanto } from "../../../tipoj/payload-asertitaj-tipoj";
 
@@ -11,7 +11,14 @@ export const Uzantoj: CollectionConfig = {
   },
   admin: {
     useAsTitle: "nomo" satisfies keyof Uzanto<0>,
-    defaultColumns: ["nomo", "email"] satisfies (keyof Uzanto<0>)[],
+    defaultColumns: [
+      "nomo",
+      "email",
+      "roloj",
+      "updatedAt",
+      "createdAt",
+    ] satisfies (keyof Uzanto<0>)[],
+    group: KolGrupo.Homoj,
   },
   labels: {
     singular: "Uzanto",
@@ -29,6 +36,22 @@ export const Uzantoj: CollectionConfig = {
       type: "text",
     },
     {
+      name: "createdAt",
+      type: "date",
+      label: "Kreita je",
+      admin: {
+        hidden: true,
+      },
+    },
+    {
+      name: "updatedAt",
+      type: "date",
+      label: "Ĝisdatigita je",
+      admin: {
+        hidden: true,
+      },
+    },
+    {
       name: "email",
       label: "Retpoŝto",
       type: "email",
@@ -38,8 +61,8 @@ export const Uzantoj: CollectionConfig = {
       name: "roloj",
       type: "select",
       hasMany: true,
-      defaultValue: ["ulo"] satisfies Rolo[],
-      options: ["admin", "ulo"],
+      defaultValue: ["vortaristo"] satisfies Rolo[],
+      options: ["admin", "vortaristo"],
       access: {
         read: administrantoj,
       },
