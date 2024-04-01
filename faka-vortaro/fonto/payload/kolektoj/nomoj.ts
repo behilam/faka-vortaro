@@ -1,4 +1,4 @@
 export enum Kol {
-  Kategorioj = "kategorioj",
+  Vortoj = "vortoj",
   Uzantoj = "uzantoj",
 }

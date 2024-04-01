@@ -1,58 +1,47 @@
 import type { CollectionConfig } from "payload/types";
 
-import { admins } from "../../access/admins";
-import { anyone } from "../../access/anyone";
-import { Kol } from "../collectionNames";
-import adminsAndUser from "./access/adminsAndUser";
-import { checkRole } from "./checkRole";
-import { ensureFirstUserIsAdmin } from "./hooks/ensureFirstUserIsAdmin";
-import { loginAfterCreate } from "./hooks/loginAfterCreate";
+import { Kol } from "../nomoj";
+import { administrantoj } from "../alireblo/ajn";
+import { Rolo, Uzanto } from "../../../tipoj/payload-asertitaj-tipoj";
 
-export const Users: CollectionConfig = {
-  // slug: Kol.Uzantoj,
-  slug: "uzantoj",
+export const Uzantoj: CollectionConfig = {
+  slug: Kol.Uzantoj,
+  typescript: {
+    interface: "Uzanto",
+  },
   admin: {
-    useAsTitle: "name",
-    defaultColumns: ["name", "email"],
+    useAsTitle: "nomo" satisfies keyof Uzanto<0>,
+    defaultColumns: ["nomo", "email"] satisfies (keyof Uzanto<0>)[],
+  },
+  labels: {
+    singular: "Uzanto",
+    plural: "Uzantoj",
   },
   access: {
-    read: adminsAndUser,
-    create: anyone,
-    update: adminsAndUser,
-    delete: admins,
-    admin: ({ req: { user } }) => checkRole(["admin"], user),
-  },
-  hooks: {
-    afterChange: [loginAfterCreate],
+    create: administrantoj,
+    update: administrantoj,
+    delete: administrantoj,
   },
   auth: true,
   fields: [
     {
-      name: "name",
+      name: "nomo",
       type: "text",
     },
     {
-      name: "roles",
+      name: "email",
+      label: "Retpoŝto",
+      type: "email",
+      required: true,
+    },
+    {
+      name: "roloj",
       type: "select",
       hasMany: true,
-      defaultValue: ["user"],
-      options: [
-        {
-          label: "admin",
-          value: "admin",
-        },
-        {
-          label: "user",
-          value: "user",
-        },
-      ],
-      hooks: {
-        beforeChange: [ensureFirstUserIsAdmin],
-      },
+      defaultValue: ["ulo"] satisfies Rolo[],
+      options: ["admin", "ulo"],
       access: {
-        read: admins,
-        create: admins,
-        update: admins,
+        read: administrantoj,
       },
     },
   ],

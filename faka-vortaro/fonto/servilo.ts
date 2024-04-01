@@ -14,7 +14,7 @@ const PORDO = process.env.PORDO || 3000;
 
 const apo = express();
 
-// apo.get("/", (_, res) => res.redirect("/admin"));
+apo.get("/", (_, res) => res.redirect("/admin"));
 
 const ek = async (): Promise<void> => {
   await payload.init({

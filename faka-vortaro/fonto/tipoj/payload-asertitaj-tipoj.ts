@@ -10,8 +10,8 @@ import { Subtrahi } from './utiltipoj';
 
 export interface Config {
   collections: {
-    categories: Category;
-    uzantoj: Uzantoj;
+    vortoj: Vorto;
+    uzantoj: Uzanto;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -19,11 +19,23 @@ export interface Config {
 };
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "categories".
+ * via the `definition` "vortoj".
  */
-export interface Category<Profundo extends number = 2> {
+export interface Vorto<Profundo extends number = 2> {
   id: string;
-  title?: string | null;
+  nomo: string;
+  signifoj: {
+    signifo: string;
+    transitivo?: ('tr' | 'ntr' | 'x') | null;
+    id?: string | null;
+  }[];
+  aliajLingvoj?:
+    | {
+        lingvo: 'en' | 'es' | 'zh';
+        tradukoj?: string[] | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 };
@@ -31,10 +43,10 @@ export interface Category<Profundo extends number = 2> {
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "uzantoj".
  */
-export interface Uzantoj<Profundo extends number = 2> {
+export interface Uzanto<Profundo extends number = 2> {
   id: string;
-  name?: string | null;
-  roles?: ('admin' | 'user')[] | null;
+  nomo?: string | null;
+  roloj?: ('admin' | 'ulo')[] | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -54,7 +66,7 @@ export interface PayloadPreference<Profundo extends number = 2> {
   id: string;
   user: {
     relationTo: 'uzantoj';
-    value: Profundo extends 0 ? string : Uzantoj<Subtrahi<Profundo>>;
+    value: Profundo extends 0 ? string : Uzanto<Subtrahi<Profundo>>;
   };
   key?: string | null;
   value?:
@@ -83,3 +95,4 @@ export interface PayloadMigration<Profundo extends number = 2> {
 
 
 /* Derivated types */
+export type Rolo = NonNullable<Uzanto<0>["roloj"]>[number];

@@ -5,8 +5,8 @@ import dotenv from "dotenv";
 import path from "path";
 import { buildConfig } from "payload/config";
 
-import { Categories, Users } from "./collections";
-import { Kol } from "./collections/collectionNames";
+import { Vortoj, Uzantoj } from "./kolektoj";
+import { Kol } from "./kolektoj/nomoj";
 
 dotenv.config({
   path: path.resolve(__dirname, "../../.env"),
@@ -32,7 +32,7 @@ export default buildConfig({
     url: process.env.DATABASE_URI!,
   }),
   serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL,
-  collections: [Categories, Users],
+  collections: [Vortoj, Uzantoj],
   typescript: {
     outputFile: path.resolve(__dirname, "../tipoj/payload-tipoj.ts"),
   },
@@ -40,5 +40,5 @@ export default buildConfig({
     schemaOutputFile: path.resolve(__dirname, "../tipoj/generita-skemo.graphql"),
   },
   cors: process.env.CORS?.split(","),
-  csrf: process.env.CORS?.split(","),
+  csrf: process.env.CORS?.split(",") ?? [],
 });

@@ -8,8 +8,8 @@
 
 export interface Config {
   collections: {
-    categories: Category;
-    uzantoj: Uzantoj;
+    vortoj: Vorto;
+    uzantoj: Uzanto;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -17,11 +17,23 @@ export interface Config {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "categories".
+ * via the `definition` "vortoj".
  */
-export interface Category {
+export interface Vorto {
   id: string;
-  title?: string | null;
+  nomo: string;
+  signifoj: {
+    signifo: string;
+    transitivo?: ('tr' | 'ntr' | 'x') | null;
+    id?: string | null;
+  }[];
+  aliajLingvoj?:
+    | {
+        lingvo: 'en' | 'es' | 'zh';
+        tradukoj?: string[] | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -29,10 +41,10 @@ export interface Category {
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "uzantoj".
  */
-export interface Uzantoj {
+export interface Uzanto {
   id: string;
-  name?: string | null;
-  roles?: ('admin' | 'user')[] | null;
+  nomo?: string | null;
+  roloj?: ('admin' | 'ulo')[] | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -52,7 +64,7 @@ export interface PayloadPreference {
   id: string;
   user: {
     relationTo: 'uzantoj';
-    value: string | Uzantoj;
+    value: string | Uzanto;
   };
   key?: string | null;
   value?:

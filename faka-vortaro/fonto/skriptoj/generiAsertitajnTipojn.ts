@@ -12,11 +12,12 @@ const kapMesagxo = /*ts*/ `
 `.trim();
 
 const enportoj = `
-import { Subtract } from './utiltipoj';
+import { Subtrahi } from './utiltipoj';
 `.trim();
 
 /** Helper types derived from the asserted types */
 const ekstrajTipoj = `
+export type Rolo = NonNullable<Uzanto<0>["roloj"]>[number];
 `;
 
 const asertitajTipojDosiernomo = "payload-asertitaj-tipoj.ts";
@@ -30,11 +31,11 @@ try {
     .replace(/^export interface (\w+)/gm, "export interface $1<Profundo extends number = 2>") // Convert interfaces into types
     .replace(/^}$/gm, "};") // Append semicolon to type end
     .replace(/\binterface Config<.+>/, "interface Config") // Remove Profundo generic from Config type
-    .replace(/: string \| ([A-Z]\w+);/g, ": Profundo extends 0 ? string : $1<Subtract<Profundo>>;")
-    .replace(/: \(string \| null\) \| ([A-Z]\w+);/g, ": (Profundo extends 0 ? string : $1<Subtract<Profundo>>) | null;")
-    .replace(/: string \| ([A-Z]\w+) \| null;/g, ": (Profundo extends 0 ? string : $1<Subtract<Profundo>>) | null;")
-    .replace(/: \(string \| ([A-Z]\w+)\)\[\];/g, ": Profundo extends 0 ? string[] : $1<Subtract<Profundo>>[];")
-    .replace(/: \(string \| ([A-Z]\w+)\)\[\] \| null;/g, ": (Profundo extends 0 ? string[] : $1<Subtract<Profundo>>[]) | null;")
+    .replace(/: string \| ([A-Z]\w+);/g, ": Profundo extends 0 ? string : $1<Subtrahi<Profundo>>;")
+    .replace(/: \(string \| null\) \| ([A-Z]\w+);/g, ": (Profundo extends 0 ? string : $1<Subtrahi<Profundo>>) | null;")
+    .replace(/: string \| ([A-Z]\w+) \| null;/g, ": (Profundo extends 0 ? string : $1<Subtrahi<Profundo>>) | null;")
+    .replace(/: \(string \| ([A-Z]\w+)\)\[\];/g, ": Profundo extends 0 ? string[] : $1<Subtrahi<Profundo>>[];")
+    .replace(/: \(string \| ([A-Z]\w+)\)\[\] \| null;/g, ": (Profundo extends 0 ? string[] : $1<Subtrahi<Profundo>>[]) | null;")
     .replace(/declare module 'payload'[^]*/m, "/* Derivated types */");
 
   const asertitajTipoj = `${kapMesagxo}\n\n${enportoj}\n\n${gxisdatigitajTipoj}${ekstrajTipoj}`;

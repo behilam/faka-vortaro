@@ -2,7 +2,7 @@
 
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
 
-import { User } from "../../../tipoj/payload-tipoj";
+import { Uzanto } from "../../../tipoj/payload-asertitaj-tipoj";
 
 // eslint-disable-next-line no-unused-vars
 type ResetPassword = (args: {
@@ -15,13 +15,13 @@ type ForgotPassword = (args: { email: string }) => Promise<void>; // eslint-disa
 
 type Create = (args: { email: string; password: string; passwordConfirm: string }) => Promise<void>; // eslint-disable-line no-unused-vars
 
-type Login = (args: { email: string; password: string }) => Promise<User>; // eslint-disable-line no-unused-vars
+type Login = (args: { email: string; password: string }) => Promise<Uzanto>; // eslint-disable-line no-unused-vars
 
 type Logout = () => Promise<void>;
 
 type AuthContext = {
-  user?: User | null;
-  setUser: (user: User | null) => void; // eslint-disable-line no-unused-vars
+  user?: Uzanto | null;
+  setUser: (user: Uzanto | null) => void; // eslint-disable-line no-unused-vars
   logout: Logout;
   login: Login;
   create: Create;
@@ -33,7 +33,7 @@ type AuthContext = {
 const Context = createContext({} as AuthContext);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>();
+  const [user, setUser] = useState<Uzanto | null>();
 
   // used to track the single event of logging in or logging out
   // useful for `useEffect` hooks that should only run once

@@ -1,13 +1,13 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-import type { User } from "../../tipoj/payload-tipoj";
+import type { Uzanto } from "../../tipoj/payload-tipoj";
 
 export const getMeUser = async (args?: {
   nullUserRedirect?: string;
   validUserRedirect?: string;
 }): Promise<{
-  user: User;
+  user: Uzanto;
   token: string;
 }> => {
   const { nullUserRedirect, validUserRedirect } = args || {};
@@ -23,7 +23,7 @@ export const getMeUser = async (args?: {
   const {
     user,
   }: {
-    user: User;
+    user: Uzanto;
   } = await meUserReq.json();
 
   if (validUserRedirect && meUserReq.ok && user) {
