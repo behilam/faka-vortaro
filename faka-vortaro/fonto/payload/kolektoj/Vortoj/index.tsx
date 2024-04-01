@@ -20,7 +20,7 @@ const lingvoj = [
   { value: "en", label: "Angla - en" },
   { value: "es", label: "Hispana - es" },
   { value: "zh", label: "Ĉina - zh" },
-] satisfies readonly Option[] as unknown as Option[];
+] as const satisfies Option[];
 
 export const Vortoj: CollectionConfig = {
   slug: Kol.Vortoj,
