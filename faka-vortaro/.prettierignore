@@ -1,0 +1,7 @@
+node_modules
+.yarn
+build
+dist
+payload-tipoj.ts
+payload-asertitaj-tipoj.ts
+

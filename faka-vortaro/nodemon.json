@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json.schemastore.org/nodemon.json",
+  "ext": "ts",
+  "exec": "ts-node fonto/servilo.ts -- -I",
+  "stdin": false,
+  "ignore" : [
+    "fonto/apo"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "outDir": "dist",
+    "noEmit": false,
+    "jsx": "react",
+    "sourceMap": true,
+  },
+  "include": [
+    "fonto/servilo.ts",
+    "fonto/payload/payload.agordoj.ts",
+  ]
+}
