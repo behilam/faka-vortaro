@@ -96,4 +96,5 @@ export interface PayloadMigration<Profundo extends number = 2> {
 
 /* Derivated types */
 export type Rolo = NonNullable<Uzanto<0>["roloj"]>[number];
-export type AliajLingvoj = NonNullable<Vorto<0>["aliajLingvoj"]>[number];
+export type Signifo = NonNullable<Vorto<0>["signifoj"]>[number];
+export type AliaLingvo = NonNullable<Vorto<0>["aliajLingvoj"]>[number];

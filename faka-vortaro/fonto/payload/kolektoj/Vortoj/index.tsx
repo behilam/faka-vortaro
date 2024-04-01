@@ -4,7 +4,7 @@ import type {
 } from "payload/dist/admin/components/forms/RowLabel/types";
 import type { CollectionConfig, Option } from "payload/types";
 
-import { AliajLingvoj, Vorto } from "../../../tipoj/payload-asertitaj-tipoj";
+import { AliaLingvo, Signifo, Vorto } from "../../../tipoj/payload-asertitaj-tipoj";
 import { Kol } from "../nomoj";
 
 interface TRowLabelArgs<T extends RowLabelArgs["data"]> extends RowLabelArgs {
@@ -36,6 +36,7 @@ export const Vortoj: CollectionConfig = {
   fields: [
     {
       name: "nomo",
+      label: "Nomo de la vorto",
       type: "text",
       required: true,
     },
@@ -43,12 +44,13 @@ export const Vortoj: CollectionConfig = {
       name: "signifoj",
       type: "array",
       required: true,
-      defaultValue: [{ signifo: "" }] satisfies Vorto<0>["signifoj"],
+      defaultValue: [{ signifo: "" }] satisfies Signifo[],
       admin: {
         components: {
           RowLabel: (props => {
-            const data = (props as TRowLabelArgs<Vorto<0>["signifoj"][number]>).data;
-            return data.signifo;
+            const { signifo, transitivo } = (props as TRowLabelArgs<Partial<Signifo>>).data;
+            const transitivteksto = transitivo ? ` (${transitivo})` : "";
+            return `${signifo}${transitivteksto}`;
           }) satisfies RowLabelFunction,
         },
       },
@@ -71,8 +73,8 @@ export const Vortoj: CollectionConfig = {
       admin: {
         components: {
           RowLabel: (props => {
-            const data = (props as TRowLabelArgs<AliajLingvoj>).data;
-            return `${data.lingvo}: ${data.tradukoj?.join(", ") ?? ""}`;
+            const { lingvo, tradukoj } = (props as TRowLabelArgs<Partial<AliaLingvo>>).data;
+            return `${lingvo ?? ""}: ${tradukoj?.join(", ") ?? ""}`;
           }) satisfies RowLabelFunction,
         },
       },
