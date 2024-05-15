@@ -16,7 +16,7 @@ export default buildConfig({
   admin: {
     user: Kol.Uzantoj,
     bundler: webpackBundler(),
-    css: path.resolve(__dirname, "./stiloj/cxefa.scss"),
+    css: path.resolve(__dirname, "../stiloj/cxefa.scss"),
     webpack: config => ({
       ...config,
       resolve: {

@@ -121,7 +121,7 @@ export const Terminoj: CollectionConfig = {
                   Partial<Tradukoj>[(typeof lingvoj)[number]["value"]]
                 >[number];
                 return (
-                  <p className="absoluta w-9_10 elipso">
+                  <p className="absolute w-11/12 truncate">
                     {index ?? 0} - {traduko}
                   </p>
                 );

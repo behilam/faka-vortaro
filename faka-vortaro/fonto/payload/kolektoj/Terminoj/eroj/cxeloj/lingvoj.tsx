@@ -8,7 +8,12 @@ const LingvojCxelo = ({ cellData = {} }: { cellData: Termino["lingvoj"] }) => {
     .map(([lingvo, tradukoj]) => {
       const estasTradukoj = tradukoj && tradukoj.length > 0;
       return (
-        <span key={lingvo} className={`mx-1 ${estasTradukoj ? "grasa" : "koloro-malgrava"}`}>
+        <span
+          key={lingvo}
+          className={`mx-1 ${
+            estasTradukoj ? "font-semibold" : "text-neutral-400 dark:text-neutral-600"
+          }`}
+        >
           {lingvo.toUpperCase()}
         </span>
       );
