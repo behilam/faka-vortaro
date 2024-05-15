@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 import path from "path";
 import { buildConfig } from "payload/config";
 
-import { Vortoj, Uzantoj } from "./kolektoj";
+import { Terminoj, Uzantoj } from "./kolektoj";
 import { Kol } from "./kolektoj/nomoj";
 
 dotenv.config({
@@ -16,6 +16,7 @@ export default buildConfig({
   admin: {
     user: Kol.Uzantoj,
     bundler: webpackBundler(),
+    css: path.resolve(__dirname, "./stiloj/cxefa.scss"),
     webpack: config => ({
       ...config,
       resolve: {
@@ -30,9 +31,10 @@ export default buildConfig({
   editor: slateEditor({}),
   db: mongooseAdapter({
     url: process.env.DATABASE_URI!,
+    autoPluralization: false,
   }),
   serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL,
-  collections: [Uzantoj, Vortoj],
+  collections: [Uzantoj, Terminoj],
   typescript: {
     outputFile: path.resolve(__dirname, "../tipoj/payload-tipoj.ts"),
   },

@@ -1,0 +1,44 @@
+$bazaKoloro: --theme-text;
+$griza: gray;
+$grizBlanketa: hsl(0, 0%, 60%);
+
+.absoluta {
+  position: absolute;
+}
+
+.w-plena {
+  width: 100%;
+}
+
+.w-9_10 {
+  width: 90%;
+}
+
+.elipso {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.koloro-baza {
+  color: $bazaKoloro;
+}
+
+.koloro-malgrava {
+  color: $grizBlanketa;
+}
+
+.mx-1 {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
+
+.grasa {
+  font-weight: 600;
+}
+
+[data-theme="dark"] {
+  .koloro-malgrava {
+    color: $griza;
+  }
+}

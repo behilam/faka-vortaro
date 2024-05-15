@@ -1,5 +1,5 @@
 export enum Kol {
-  Vortoj = "vortoj",
+  Terminoj = "terminoj",
   Uzantoj = "uzantoj",
 }
 

@@ -1,48 +1,55 @@
+import React from "react";
 import type {
   RowLabelArgs,
+  RowLabelComponent,
   RowLabelFunction,
 } from "payload/dist/admin/components/forms/RowLabel/types";
-import type { CollectionConfig, Option } from "payload/types";
+import type { ArrayField, CollectionConfig, Option } from "payload/types";
 
 import {
-  AliaLingvo,
   Signifo,
   SignifoEkzemplo,
-  Vorto,
+  Termino,
+  Tradukoj,
 } from "../../../tipoj/payload-asertitaj-tipoj";
 import { Kol, KolGrupo } from "../nomoj";
+import LingvojCxelo from "./eroj/cxeloj/lingvoj";
 
 interface TRowLabelArgs<T extends RowLabelArgs["data"]> extends RowLabelArgs {
   data: T;
 }
 
 const lingvoj = [
-  { value: "en", label: "Angla - en" },
-  { value: "es", label: "Hispana - es" },
-  { value: "zh", label: "Ĉina - zh" },
+  { value: "de", label: "Germana - DE" },
+  { value: "en", label: "Angla - EN" },
+  { value: "es", label: "Hispana - ES" },
+  { value: "fr", label: "Franca - FR" },
+  { value: "ja", label: "Japana - JA" },
+  { value: "pt", label: "Portugala - PT" },
+  { value: "zh", label: "Ĉina - ZH" },
 ] as const satisfies Option[];
 
-export const Vortoj: CollectionConfig = {
-  slug: Kol.Vortoj,
+export const Terminoj: CollectionConfig = {
+  slug: Kol.Terminoj,
   admin: {
-    useAsTitle: "nomo" satisfies keyof Vorto<0>,
-    defaultColumns: ["nomo", "signifoj", "aliajLingvoj", "createdAt"] satisfies (keyof Vorto<0>)[],
+    useAsTitle: "termino" satisfies keyof Termino<0>,
+    defaultColumns: ["termino", "signifoj", "lingvoj", "createdAt"] satisfies (keyof Termino<0>)[],
     group: KolGrupo.Vortaro,
   },
   labels: {
-    plural: "Vortoj",
-    singular: "Vorto",
+    plural: "Terminoj",
+    singular: "Termino",
   },
   typescript: {
-    interface: "Vorto",
+    interface: "Termino",
   },
   access: {
     read: () => true,
   },
   fields: [
     {
-      name: "nomo",
-      label: "Nomo de la vorto",
+      name: "termino",
+      label: "Termino",
       type: "text",
       required: true,
       unique: true,
@@ -95,33 +102,48 @@ export const Vortoj: CollectionConfig = {
       ],
     },
     {
-      name: "aliajLingvoj",
-      type: "array",
-      labels: {
-        plural: "Aliaj lingvoj",
-        singular: "Alia lingvo",
-      },
+      name: "lingvoj",
+      type: "group",
       admin: {
         components: {
-          RowLabel: (props => {
-            const { lingvo, tradukoj } = (props as TRowLabelArgs<Partial<AliaLingvo>>).data;
-            return `${lingvo ?? ""}: ${tradukoj?.join(", ") ?? ""}`;
-          }) satisfies RowLabelFunction,
+          Cell: LingvojCxelo,
         },
       },
-      fields: [
-        {
-          name: "lingvo",
-          type: "select",
-          options: lingvoj,
-          required: true,
-        },
-        {
-          name: "tradukoj",
-          type: "text",
-          hasMany: true,
-        },
-      ],
+      fields: lingvoj.map(
+        ({ value, label }): ArrayField => ({
+          name: value,
+          type: "array",
+          label,
+          admin: {
+            components: {
+              RowLabel: (({ data, index }) => {
+                const { traduko } = data as NonNullable<
+                  Partial<Tradukoj>[(typeof lingvoj)[number]["value"]]
+                >[number];
+                return (
+                  <p className="absoluta w-9_10 elipso">
+                    {index ?? 0} - {traduko}
+                  </p>
+                );
+              }) satisfies RowLabelComponent,
+            },
+          },
+          fields: [
+            {
+              name: "traduko",
+              type: "text",
+              required: true,
+              admin: {
+                components: {
+                  Label: () => {
+                    return <></>;
+                  },
+                },
+              },
+            },
+          ],
+        })
+      ),
     },
     {
       name: "createdAt",

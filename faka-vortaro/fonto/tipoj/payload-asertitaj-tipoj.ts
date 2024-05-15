@@ -11,7 +11,7 @@ import { Subtrahi } from './utiltipoj';
 export interface Config {
   collections: {
     uzantoj: Uzanto;
-    vortoj: Vorto;
+    terminoj: Termino;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -38,11 +38,11 @@ export interface Uzanto<Profundo extends number = 2> {
 };
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "vortoj".
+ * via the `definition` "terminoj".
  */
-export interface Vorto<Profundo extends number = 2> {
+export interface Termino<Profundo extends number = 2> {
   id: string;
-  nomo: string;
+  termino: string;
   signifoj: {
     signifo: string;
     ekzemploj?:
@@ -53,13 +53,50 @@ export interface Vorto<Profundo extends number = 2> {
       | null;
     id?: string | null;
   }[];
-  aliajLingvoj?:
-    | {
-        lingvo: 'en' | 'es' | 'zh';
-        tradukoj?: string[] | null;
-        id?: string | null;
-      }[]
-    | null;
+  lingvoj?: {
+    de?:
+      | {
+          traduko: string;
+          id?: string | null;
+        }[]
+      | null;
+    en?:
+      | {
+          traduko: string;
+          id?: string | null;
+        }[]
+      | null;
+    es?:
+      | {
+          traduko: string;
+          id?: string | null;
+        }[]
+      | null;
+    fr?:
+      | {
+          traduko: string;
+          id?: string | null;
+        }[]
+      | null;
+    ja?:
+      | {
+          traduko: string;
+          id?: string | null;
+        }[]
+      | null;
+    pt?:
+      | {
+          traduko: string;
+          id?: string | null;
+        }[]
+      | null;
+    zh?:
+      | {
+          traduko: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
   createdAt: string;
   updatedAt: string;
 };
@@ -101,6 +138,6 @@ export interface PayloadMigration<Profundo extends number = 2> {
 
 /* Derivated types */
 export type Rolo = NonNullable<Uzanto<0>["roloj"]>[number];
-export type Signifo = NonNullable<Vorto<0>["signifoj"]>[number];
+export type Signifo = NonNullable<Termino<0>["signifoj"]>[number];
 export type SignifoEkzemplo = NonNullable<Signifo["ekzemploj"]>[number];
-export type AliaLingvo = NonNullable<Vorto<0>["aliajLingvoj"]>[number];
+export type Tradukoj = NonNullable<Termino<0>["lingvoj"]>;

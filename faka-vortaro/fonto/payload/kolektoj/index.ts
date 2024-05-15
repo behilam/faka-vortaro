@@ -1,2 +1,2 @@
-export * from "./Vortoj";
+export * from "./Terminoj";
 export * from "./Uzantoj";

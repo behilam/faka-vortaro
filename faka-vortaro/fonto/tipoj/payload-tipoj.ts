@@ -9,7 +9,7 @@
 export interface Config {
   collections: {
     uzantoj: Uzanto;
-    vortoj: Vorto;
+    terminoj: Termino;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -36,11 +36,11 @@ export interface Uzanto {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "vortoj".
+ * via the `definition` "terminoj".
  */
-export interface Vorto {
+export interface Termino {
   id: string;
-  nomo: string;
+  termino: string;
   signifoj: {
     signifo: string;
     ekzemploj?:
@@ -51,13 +51,50 @@ export interface Vorto {
       | null;
     id?: string | null;
   }[];
-  aliajLingvoj?:
-    | {
-        lingvo: 'en' | 'es' | 'zh';
-        tradukoj?: string[] | null;
-        id?: string | null;
-      }[]
-    | null;
+  lingvoj?: {
+    de?:
+      | {
+          traduko: string;
+          id?: string | null;
+        }[]
+      | null;
+    en?:
+      | {
+          traduko: string;
+          id?: string | null;
+        }[]
+      | null;
+    es?:
+      | {
+          traduko: string;
+          id?: string | null;
+        }[]
+      | null;
+    fr?:
+      | {
+          traduko: string;
+          id?: string | null;
+        }[]
+      | null;
+    ja?:
+      | {
+          traduko: string;
+          id?: string | null;
+        }[]
+      | null;
+    pt?:
+      | {
+          traduko: string;
+          id?: string | null;
+        }[]
+      | null;
+    zh?:
+      | {
+          traduko: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
   createdAt: string;
   updatedAt: string;
 }
