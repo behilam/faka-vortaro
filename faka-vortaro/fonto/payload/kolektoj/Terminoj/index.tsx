@@ -12,6 +12,7 @@ import {
   Termino,
   Tradukoj,
 } from "../../../tipoj/payload-asertitaj-tipoj";
+import Dato from "../../eroj/cxeloj/Dato";
 import { Kol, KolGrupo } from "../nomoj";
 import LingvojCxelo from "./eroj/cxeloj/lingvoj";
 
@@ -151,6 +152,9 @@ export const Terminoj: CollectionConfig = {
       label: "Kreita je",
       admin: {
         hidden: true,
+        components: {
+          Cell: Dato,
+        },
       },
     },
     {
@@ -159,6 +163,9 @@ export const Terminoj: CollectionConfig = {
       label: "Ĝisdatigita je",
       admin: {
         hidden: true,
+        components: {
+          Cell: Dato,
+        },
       },
     },
   ],

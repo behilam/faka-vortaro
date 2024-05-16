@@ -1,12 +1,16 @@
-import { webpackBundler } from "@payloadcms/bundler-webpack";
+import { buildConfig } from "payload/config";
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { slateEditor } from "@payloadcms/richtext-slate";
+import { webpackBundler } from "@payloadcms/bundler-webpack";
+import dayjs from "dayjs";
 import dotenv from "dotenv";
+import eoDayjs from "dayjs/locale/eo";
 import path from "path";
-import { buildConfig } from "payload/config";
 
-import { Terminoj, Uzantoj } from "./kolektoj";
 import { Kol } from "./kolektoj/nomoj";
+import { Terminoj, Uzantoj } from "./kolektoj";
+
+dayjs.locale(eoDayjs);
 
 dotenv.config({
   path: path.resolve(__dirname, "../../.env"),

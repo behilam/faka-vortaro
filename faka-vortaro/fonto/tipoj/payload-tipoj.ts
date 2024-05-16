@@ -22,9 +22,9 @@ export interface Config {
 export interface Uzanto {
   id: string;
   nomo?: string | null;
+  roloj?: ('admin' | 'vortaristo')[] | null;
   createdAt: string;
   updatedAt: string;
-  roloj?: ('admin' | 'vortaristo')[] | null;
   email: string;
   resetPasswordToken?: string | null;
   resetPasswordExpiration?: string | null;

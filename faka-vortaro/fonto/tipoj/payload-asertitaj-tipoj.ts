@@ -24,9 +24,9 @@ export interface Config {
 export interface Uzanto<Profundo extends number = 2> {
   id: string;
   nomo?: string | null;
+  roloj?: ('admin' | 'vortaristo')[] | null;
   createdAt: string;
   updatedAt: string;
-  roloj?: ('admin' | 'vortaristo')[] | null;
   email: string;
   resetPasswordToken?: string | null;
   resetPasswordExpiration?: string | null;
