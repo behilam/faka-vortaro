@@ -10,6 +10,7 @@ export interface Config {
   collections: {
     uzantoj: Uzanto;
     terminoj: Termino;
+    notoj: Noto;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -53,6 +54,7 @@ export interface Termino {
       | null;
     id?: string | null;
   }[];
+  notoj?: string | null;
   lingvoj?: {
     de?:
       | {
@@ -101,6 +103,17 @@ export interface Termino {
   gxisdatiginto?: (string | null) | Uzanto;
   createdAt: string;
   updatedAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "notoj".
+ */
+export interface Noto {
+  id: string;
+  simbolo: string;
+  signifo?: string | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -104,6 +104,12 @@ export const Terminoj: CollectionConfig = {
       ],
     },
     {
+      name: "notoj",
+      type: "relationship",
+      relationTo: Kol.Notoj,
+      hasMany: true,
+    },
+    {
       name: "lingvoj",
       type: "group",
       admin: {

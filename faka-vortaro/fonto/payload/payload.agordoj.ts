@@ -8,7 +8,7 @@ import eoDayjs from "dayjs/locale/eo";
 import path from "path";
 
 import { Kol } from "./kolektoj/nomoj";
-import { Terminoj, Uzantoj } from "./kolektoj";
+import { Notoj, Terminoj, Uzantoj } from "./kolektoj";
 
 dayjs.locale(eoDayjs);
 
@@ -38,7 +38,7 @@ export default buildConfig({
     autoPluralization: false,
   }),
   serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL,
-  collections: [Uzantoj, Terminoj],
+  collections: [Uzantoj, Terminoj, Notoj],
   typescript: {
     outputFile: path.resolve(__dirname, "../tipoj/payload-tipoj.ts"),
   },
