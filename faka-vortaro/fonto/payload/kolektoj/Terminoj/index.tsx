@@ -67,6 +67,9 @@ export const Terminoj: CollectionConfig = {
       defaultValue: [{ signifo: "" }] satisfies Signifo[],
       admin: {
         components: {
+          Cell: ({ cellData }: { cellData: Signifo[] }) => {
+            return <div>{cellData.length}</div>;
+          },
           RowLabel: (props => {
             const { signifo } = (props as TRowLabelArgs<Partial<Signifo>>).data;
             return signifo ?? "";
