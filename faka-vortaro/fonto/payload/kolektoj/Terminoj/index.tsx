@@ -135,6 +135,7 @@ export const Terminoj: CollectionConfig = {
           type: "array",
           label,
           admin: {
+            initCollapsed: true,
             components: {
               RowLabel: (({ data, index }) => {
                 const { traduko } = data as NonNullable<
