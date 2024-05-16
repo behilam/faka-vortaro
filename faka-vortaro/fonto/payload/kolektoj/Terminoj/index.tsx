@@ -70,10 +70,14 @@ export const Terminoj: CollectionConfig = {
           Cell: ({ cellData }: { cellData: Signifo[] }) => {
             return <div>{cellData.length}</div>;
           },
-          RowLabel: (props => {
-            const { signifo } = (props as TRowLabelArgs<Partial<Signifo>>).data;
-            return signifo ?? "";
-          }) satisfies RowLabelFunction,
+          RowLabel: (({ data, index }) => {
+            const { signifo } = data as Partial<Signifo>;
+            return (
+              <p className="absolute w-11/12 truncate">
+                {index ?? 0} - {signifo}
+              </p>
+            );
+          }) satisfies RowLabelComponent,
         },
       },
       fields: [
