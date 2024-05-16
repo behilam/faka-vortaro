@@ -62,7 +62,6 @@ export interface Termino<Profundo extends number = 2> {
       | null;
     id?: string | null;
   }[];
-  notoj?: (Profundo extends 0 ? string[] : Noto<Subtrahi<Profundo>>[]) | null;
   lingvoj?: {
     de?:
       | {
@@ -107,6 +106,7 @@ export interface Termino<Profundo extends number = 2> {
         }[]
       | null;
   };
+  notoj?: (Profundo extends 0 ? string[] : Noto<Subtrahi<Profundo>>[]) | null;
   kreinto?: (Profundo extends 0 ? string : Uzanto<Subtrahi<Profundo>>) | null;
   gxisdatiginto?: (Profundo extends 0 ? string : Uzanto<Subtrahi<Profundo>>) | null;
   createdAt: string;

@@ -1,7 +1,7 @@
 import { Field } from "payload/types";
 import Dato from "../eroj/cxeloj/Dato";
 
-const kreitaKajModifita: Field[] = [
+const kreitaKajGxisdatigita: Field[] = [
   {
     name: "createdAt",
     type: "date",
@@ -26,4 +26,4 @@ const kreitaKajModifita: Field[] = [
   },
 ];
 
-export default kreitaKajModifita;
+export default kreitaKajGxisdatigita;

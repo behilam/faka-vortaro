@@ -2,7 +2,7 @@ import { Field } from "payload/types";
 
 import { Kol } from "../kolektoj/nomoj";
 
-const kreintoKajModifinto: Field[] = [
+const kreintoKajGxisdatiginto: Field[] = [
   {
     name: "kreinto",
     type: "relationship",
@@ -53,4 +53,4 @@ const kreintoKajModifinto: Field[] = [
   },
 ];
 
-export default kreintoKajModifinto;
+export default kreintoKajGxisdatiginto;

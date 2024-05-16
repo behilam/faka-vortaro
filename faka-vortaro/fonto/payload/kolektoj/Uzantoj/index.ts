@@ -3,8 +3,8 @@ import type { CollectionConfig } from "payload/types";
 import { Kol, KolGrupo } from "../nomoj";
 import { administrantoj } from "../alireblo/ajn";
 import { Rolo, Uzanto } from "../../../tipoj/payload-asertitaj-tipoj";
-import kreintoKajModifinto from "../../kampoj/kreintoKajModifinto";
-import kreitaKajModifita from "../../kampoj/kreitaKajModifita";
+import kreintoKajGxisdatiginto from "../../kampoj/kreintoKajModifinto";
+import kreitaKajGxisdatigita from "../../kampoj/kreitaKajModifita";
 
 export const Uzantoj: CollectionConfig = {
   slug: Kol.Uzantoj,
@@ -17,8 +17,8 @@ export const Uzantoj: CollectionConfig = {
       "nomo",
       "email",
       "roloj",
+      "gxisdatiginto",
       "updatedAt",
-      "createdAt",
     ] satisfies (keyof Uzanto<0>)[],
     group: KolGrupo.Homoj,
   },
@@ -54,7 +54,7 @@ export const Uzantoj: CollectionConfig = {
       },
     },
 
-    ...kreintoKajModifinto,
-    ...kreitaKajModifita,
+    ...kreintoKajGxisdatiginto,
+    ...kreitaKajGxisdatigita,
   ],
 };

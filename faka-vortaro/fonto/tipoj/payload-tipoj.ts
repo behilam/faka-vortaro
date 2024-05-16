@@ -60,7 +60,6 @@ export interface Termino {
       | null;
     id?: string | null;
   }[];
-  notoj?: (string | Noto)[] | null;
   lingvoj?: {
     de?:
       | {
@@ -105,6 +104,7 @@ export interface Termino {
         }[]
       | null;
   };
+  notoj?: (string | Noto)[] | null;
   kreinto?: (string | null) | Uzanto;
   gxisdatiginto?: (string | null) | Uzanto;
   createdAt: string;
