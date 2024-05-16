@@ -1,8 +1,5 @@
 import React from "react";
-import type {
-  RowLabelArgs,
-  RowLabelComponent,
-} from "payload/dist/admin/components/forms/RowLabel/types";
+import type { RowLabelComponent } from "payload/dist/admin/components/forms/RowLabel/types";
 import type { ArrayField, CollectionConfig, Option } from "payload/types";
 
 import {
@@ -13,13 +10,9 @@ import {
   Tradukoj,
 } from "../../../tipoj/payload-asertitaj-tipoj";
 import kreintoKajModifinto from "../../kampoj/kreintoKajModifinto";
+import kreitaKajModifita from "../../kampoj/kreitaKajModifita";
 import { Kol, KolGrupo } from "../nomoj";
 import LingvojCxelo from "./eroj/cxeloj/lingvoj";
-import kreitaKajModifita from "../../kampoj/kreitaKajModifita";
-
-interface TRowLabelArgs<T extends RowLabelArgs["data"]> extends RowLabelArgs {
-  data: T;
-}
 
 const lingvoj = [
   { value: "de", label: "Germana - DE" },
