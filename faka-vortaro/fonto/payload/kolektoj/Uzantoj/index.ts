@@ -3,7 +3,8 @@ import type { CollectionConfig } from "payload/types";
 import { Kol, KolGrupo } from "../nomoj";
 import { administrantoj } from "../alireblo/ajn";
 import { Rolo, Uzanto } from "../../../tipoj/payload-asertitaj-tipoj";
-import Dato from "../../eroj/cxeloj/Dato";
+import kreintoKajModifinto from "../../kampoj/kreintoKajModifinto";
+import kreitaKajModifita from "../../kampoj/kreitaKajModifita";
 
 export const Uzantoj: CollectionConfig = {
   slug: Kol.Uzantoj,
@@ -52,27 +53,8 @@ export const Uzantoj: CollectionConfig = {
         read: administrantoj,
       },
     },
-    {
-      name: "createdAt",
-      type: "date",
-      label: "Kreita je",
-      admin: {
-        hidden: true,
-        components: {
-          Cell: Dato,
-        },
-      },
-    },
-    {
-      name: "updatedAt",
-      type: "date",
-      label: "Ĝisdatigita je",
-      admin: {
-        hidden: true,
-        components: {
-          Cell: Dato,
-        },
-      },
-    },
+
+    ...kreintoKajModifinto,
+    ...kreitaKajModifita,
   ],
 };

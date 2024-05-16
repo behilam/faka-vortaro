@@ -25,6 +25,8 @@ export interface Uzanto<Profundo extends number = 2> {
   id: string;
   nomo?: string | null;
   roloj?: ('admin' | 'vortaristo')[] | null;
+  kreinto?: (Profundo extends 0 ? string : Uzanto<Subtrahi<Profundo>>) | null;
+  gxisdatiginto?: (Profundo extends 0 ? string : Uzanto<Subtrahi<Profundo>>) | null;
   createdAt: string;
   updatedAt: string;
   email: string;
@@ -97,6 +99,8 @@ export interface Termino<Profundo extends number = 2> {
         }[]
       | null;
   };
+  kreinto?: (Profundo extends 0 ? string : Uzanto<Subtrahi<Profundo>>) | null;
+  gxisdatiginto?: (Profundo extends 0 ? string : Uzanto<Subtrahi<Profundo>>) | null;
   createdAt: string;
   updatedAt: string;
 };

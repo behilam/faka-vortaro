@@ -23,6 +23,8 @@ export interface Uzanto {
   id: string;
   nomo?: string | null;
   roloj?: ('admin' | 'vortaristo')[] | null;
+  kreinto?: (string | null) | Uzanto;
+  gxisdatiginto?: (string | null) | Uzanto;
   createdAt: string;
   updatedAt: string;
   email: string;
@@ -95,6 +97,8 @@ export interface Termino {
         }[]
       | null;
   };
+  kreinto?: (string | null) | Uzanto;
+  gxisdatiginto?: (string | null) | Uzanto;
   createdAt: string;
   updatedAt: string;
 }

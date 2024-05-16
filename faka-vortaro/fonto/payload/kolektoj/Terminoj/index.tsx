@@ -12,9 +12,10 @@ import {
   Termino,
   Tradukoj,
 } from "../../../tipoj/payload-asertitaj-tipoj";
-import Dato from "../../eroj/cxeloj/Dato";
+import kreintoKajModifinto from "../../kampoj/kreintoKajModifinto";
 import { Kol, KolGrupo } from "../nomoj";
 import LingvojCxelo from "./eroj/cxeloj/lingvoj";
+import kreitaKajModifita from "../../kampoj/kreitaKajModifita";
 
 interface TRowLabelArgs<T extends RowLabelArgs["data"]> extends RowLabelArgs {
   data: T;
@@ -146,27 +147,8 @@ export const Terminoj: CollectionConfig = {
         })
       ),
     },
-    {
-      name: "createdAt",
-      type: "date",
-      label: "Kreita je",
-      admin: {
-        hidden: true,
-        components: {
-          Cell: Dato,
-        },
-      },
-    },
-    {
-      name: "updatedAt",
-      type: "date",
-      label: "Ĝisdatigita je",
-      admin: {
-        hidden: true,
-        components: {
-          Cell: Dato,
-        },
-      },
-    },
+
+    ...kreintoKajModifinto,
+    ...kreitaKajModifita,
   ],
 };
