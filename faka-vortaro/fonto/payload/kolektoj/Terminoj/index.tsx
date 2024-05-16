@@ -2,7 +2,6 @@ import React from "react";
 import type {
   RowLabelArgs,
   RowLabelComponent,
-  RowLabelFunction,
 } from "payload/dist/admin/components/forms/RowLabel/types";
 import type { ArrayField, CollectionConfig, Option } from "payload/types";
 
@@ -94,17 +93,23 @@ export const Terminoj: CollectionConfig = {
             singular: "Ekzemplo",
           },
           admin: {
+            initCollapsed: true,
             components: {
-              RowLabel: (props => {
-                const { ekzemplo } = (props as TRowLabelArgs<Partial<SignifoEkzemplo>>).data;
-                return ekzemplo ?? "";
-              }) satisfies RowLabelFunction,
+              RowLabel: (({ data, index }) => {
+                const { ekzemplo } = data as Partial<SignifoEkzemplo>;
+                return (
+                  <p className="absolute w-11/12 truncate">
+                    {index ?? 0} - {ekzemplo}
+                  </p>
+                );
+              }) satisfies RowLabelComponent,
             },
           },
           fields: [
             {
               name: "ekzemplo",
               type: "text",
+              label: false,
             },
           ],
         },
