@@ -52,9 +52,15 @@ export interface Termino {
           id?: string | null;
         }[]
       | null;
+    sinonimoj?:
+      | {
+          sinonimo?: string | null;
+          id?: string | null;
+        }[]
+      | null;
     id?: string | null;
   }[];
-  notoj?: string | null;
+  notoj?: (string | Noto)[] | null;
   lingvoj?: {
     de?:
       | {
@@ -112,8 +118,10 @@ export interface Noto {
   id: string;
   simbolo: string;
   signifo?: string | null;
-  updatedAt: string;
+  kreinto?: (string | null) | Uzanto;
+  gxisdatiginto?: (string | null) | Uzanto;
   createdAt: string;
+  updatedAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

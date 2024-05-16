@@ -54,9 +54,15 @@ export interface Termino<Profundo extends number = 2> {
           id?: string | null;
         }[]
       | null;
+    sinonimoj?:
+      | {
+          sinonimo?: string | null;
+          id?: string | null;
+        }[]
+      | null;
     id?: string | null;
   }[];
-  notoj?: string | null;
+  notoj?: (Profundo extends 0 ? string[] : Noto<Subtrahi<Profundo>>[]) | null;
   lingvoj?: {
     de?:
       | {
@@ -114,8 +120,10 @@ export interface Noto<Profundo extends number = 2> {
   id: string;
   simbolo: string;
   signifo?: string | null;
-  updatedAt: string;
+  kreinto?: (Profundo extends 0 ? string : Uzanto<Subtrahi<Profundo>>) | null;
+  gxisdatiginto?: (Profundo extends 0 ? string : Uzanto<Subtrahi<Profundo>>) | null;
   createdAt: string;
+  updatedAt: string;
 };
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -157,4 +165,5 @@ export interface PayloadMigration<Profundo extends number = 2> {
 export type Rolo = NonNullable<Uzanto<0>["roloj"]>[number];
 export type Signifo = NonNullable<Termino<0>["signifoj"]>[number];
 export type SignifoEkzemplo = NonNullable<Signifo["ekzemploj"]>[number];
+export type SignifoSinonimo = NonNullable<Signifo["sinonimoj"]>[number];
 export type Tradukoj = NonNullable<Termino<0>["lingvoj"]>;

@@ -20,6 +20,7 @@ const ekstrajTipoj = `
 export type Rolo = NonNullable<Uzanto<0>["roloj"]>[number];
 export type Signifo = NonNullable<Termino<0>["signifoj"]>[number];
 export type SignifoEkzemplo = NonNullable<Signifo["ekzemploj"]>[number];
+export type SignifoSinonimo = NonNullable<Signifo["sinonimoj"]>[number];
 export type Tradukoj = NonNullable<Termino<0>["lingvoj"]>;
 `;
 

@@ -8,6 +8,7 @@ import type { ArrayField, CollectionConfig, Option } from "payload/types";
 import {
   Signifo,
   SignifoEkzemplo,
+  SignifoSinonimo,
   Termino,
   Tradukoj,
 } from "../../../tipoj/payload-asertitaj-tipoj";
@@ -108,6 +109,34 @@ export const Terminoj: CollectionConfig = {
           fields: [
             {
               name: "ekzemplo",
+              type: "text",
+              label: false,
+            },
+          ],
+        },
+        {
+          name: "sinonimoj",
+          type: "array",
+          labels: {
+            plural: "Sinonimoj",
+            singular: "Sinonimo",
+          },
+          admin: {
+            initCollapsed: true,
+            components: {
+              RowLabel: (({ data, index }) => {
+                const { sinonimo } = data as Partial<SignifoSinonimo>;
+                return (
+                  <p className="absolute w-11/12 truncate">
+                    {index ?? 0} - {sinonimo}
+                  </p>
+                );
+              }) satisfies RowLabelComponent,
+            },
+          },
+          fields: [
+            {
+              name: "sinonimo",
               type: "text",
               label: false,
             },
