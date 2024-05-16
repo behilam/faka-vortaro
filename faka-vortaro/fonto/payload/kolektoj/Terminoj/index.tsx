@@ -114,7 +114,10 @@ export const Terminoj: CollectionConfig = {
                   fields: [
                     {
                       name: "ekzemplo",
-                      type: "text",
+                      type: "textarea",
+                      admin: {
+                        rows: 1,
+                      },
                       label: false,
                     },
                   ],
