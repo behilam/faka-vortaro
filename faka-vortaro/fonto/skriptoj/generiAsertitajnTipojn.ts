@@ -18,9 +18,10 @@ import { Subtrahi } from './utiltipoj';
 /** Helper types derived from the asserted types */
 const ekstrajTipoj = `
 export type Rolo = NonNullable<Uzanto<0>["roloj"]>[number];
-export type Signifo = NonNullable<Vorto<0>["signifoj"]>[number];
+export type Signifo = NonNullable<Termino<0>["signifoj"]>[number];
 export type SignifoEkzemplo = NonNullable<Signifo["ekzemploj"]>[number];
-export type AliaLingvo = NonNullable<Vorto<0>["aliajLingvoj"]>[number];
+export type SignifoSinonimo = NonNullable<Signifo["sinonimoj"]>[number];
+export type Tradukoj = NonNullable<Termino<0>["lingvoj"]>;
 `;
 
 const asertitajTipojDosiernomo = "payload-asertitaj-tipoj.ts";

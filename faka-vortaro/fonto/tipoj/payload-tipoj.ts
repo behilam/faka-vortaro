@@ -9,7 +9,8 @@
 export interface Config {
   collections: {
     uzantoj: Uzanto;
-    vortoj: Vorto;
+    terminoj: Termino;
+    notoj: Noto;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -22,9 +23,11 @@ export interface Config {
 export interface Uzanto {
   id: string;
   nomo?: string | null;
+  roloj?: ('admin' | 'vortaristo')[] | null;
+  kreinto?: (string | null) | Uzanto;
+  gxisdatiginto?: (string | null) | Uzanto;
   createdAt: string;
   updatedAt: string;
-  roloj?: ('admin' | 'vortaristo')[] | null;
   email: string;
   resetPasswordToken?: string | null;
   resetPasswordExpiration?: string | null;
@@ -36,11 +39,11 @@ export interface Uzanto {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "vortoj".
+ * via the `definition` "terminoj".
  */
-export interface Vorto {
+export interface Termino {
   id: string;
-  nomo: string;
+  termino: string;
   signifoj: {
     signifo: string;
     ekzemploj?:
@@ -49,15 +52,74 @@ export interface Vorto {
           id?: string | null;
         }[]
       | null;
+    sinonimoj?:
+      | {
+          sinonimo?: string | null;
+          id?: string | null;
+        }[]
+      | null;
     id?: string | null;
   }[];
-  aliajLingvoj?:
-    | {
-        lingvo: 'en' | 'es' | 'zh';
-        tradukoj?: string[] | null;
-        id?: string | null;
-      }[]
-    | null;
+  notoj?: (string | Noto)[] | null;
+  lingvoj?: {
+    de?:
+      | {
+          traduko: string;
+          id?: string | null;
+        }[]
+      | null;
+    en?:
+      | {
+          traduko: string;
+          id?: string | null;
+        }[]
+      | null;
+    es?:
+      | {
+          traduko: string;
+          id?: string | null;
+        }[]
+      | null;
+    fr?:
+      | {
+          traduko: string;
+          id?: string | null;
+        }[]
+      | null;
+    ja?:
+      | {
+          traduko: string;
+          id?: string | null;
+        }[]
+      | null;
+    pt?:
+      | {
+          traduko: string;
+          id?: string | null;
+        }[]
+      | null;
+    zh?:
+      | {
+          traduko: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  kreinto?: (string | null) | Uzanto;
+  gxisdatiginto?: (string | null) | Uzanto;
+  createdAt: string;
+  updatedAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "notoj".
+ */
+export interface Noto {
+  id: string;
+  simbolo: string;
+  signifo?: string | null;
+  kreinto?: (string | null) | Uzanto;
+  gxisdatiginto?: (string | null) | Uzanto;
   createdAt: string;
   updatedAt: string;
 }
