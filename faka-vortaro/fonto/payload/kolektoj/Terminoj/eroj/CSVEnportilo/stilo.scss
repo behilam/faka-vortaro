@@ -1,0 +1,23 @@
+[data-theme="dark"] {
+  .elektilo-unuopa-valoro {
+    color: lightgray;
+    background-color: transparent;
+  }
+  .elektilo-kontrolilo {
+    background-color: transparent;
+  }
+  .elektilo-menuo {
+    background-color: #222224;
+  }
+  .elektilo {
+    background-color: transparent;
+    &:hover {
+      background-color: #333;
+    }
+  }
+}
+
+.elektilo-menuo {
+  margin: 0;
+  top: 90%;
+}

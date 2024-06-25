@@ -2422,6 +2422,13 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-18.11.3.tgz#78a6d7ec962b596fc2d2ec102c4dd3ef073fea6a"
   integrity sha512-fNjDQzzOsZeKZu5NATgXUPsaFaTxeRgFXoosrHivTl8RGeV733OLawXsGfEk9a8/tySyZUyiZ6E8LcjPFZ2y1A==
 
+"@types/papaparse@^5.3.14":
+  version "5.3.14"
+  resolved "https://registry.yarnpkg.com/@types/papaparse/-/papaparse-5.3.14.tgz#345cc2a675a90106ff1dc33b95500dfb30748031"
+  integrity sha512-LxJ4iEFcpqc6METwp9f6BV6VVc43m6MfH0VqFosHvrUgfXiFe6ww7R3itkOQ+TCK6Y+Iv/+RnnvtRZnkc5Kc9g==
+  dependencies:
+    "@types/node" "*"
+
 "@types/parse-json@^4.0.0":
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.2.tgz#5950e50960793055845e956c427fc2b0d70c5239"
@@ -6914,6 +6921,11 @@ p-try@^2.0.0:
   resolved "https://registry.yarnpkg.com/p-try/-/p-try-2.2.0.tgz#cb2868540e313d61de58fafbe35ce9004d5540e6"
   integrity sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==
 
+papaparse@^5.4.1:
+  version "5.4.1"
+  resolved "https://registry.yarnpkg.com/papaparse/-/papaparse-5.4.1.tgz#f45c0f871853578bd3a30f92d96fdcfb6ebea127"
+  integrity sha512-HipMsgJkZu8br23pW15uvo6sib6wne/4woLZPlFf3rpDyMe9ywEXUsuD7+6K9PRkJlVT51j/sCOYDKGGS3ZJrw==
+
 param-case@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/param-case/-/param-case-3.0.4.tgz#7d17fe4aa12bde34d4a77d91acfb6219caad01c5"
@@ -8073,10 +8085,10 @@ react-helmet@6.1.0:
     react-fast-compare "^3.1.1"
     react-side-effect "^2.1.0"
 
-react-hook-form@7.45.4:
-  version "7.45.4"
-  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.45.4.tgz#73d228b704026ae95d7e5f7b207a681b173ec62a"
-  integrity sha512-HGDV1JOOBPZj10LB3+OZgfDBTn+IeEsNOKiq/cxbQAIbKaiJUe/KV8DBUzsx0Gx/7IG/orWqRRm736JwOfUSWQ==
+react-hook-form@^7.52.0:
+  version "7.52.0"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.52.0.tgz#e52b33043e283719586b9dd80f6d51b68dd3999c"
+  integrity sha512-mJX506Xc6mirzLsmXUJyqlAI3Kj9Ph2RhplYhUVffeOQSnubK2uVqBFOBJmvKikvbFV91pxVXmDiR+QMF19x6A==
 
 react-i18next@11.18.6:
   version "11.18.6"
@@ -8146,6 +8158,21 @@ react-select@5.7.4:
   version "5.7.4"
   resolved "https://registry.yarnpkg.com/react-select/-/react-select-5.7.4.tgz#d8cad96e7bc9d6c8e2709bdda8f4363c5dd7ea7d"
   integrity sha512-NhuE56X+p9QDFh4BgeygHFIvJJszO1i1KSkg/JPcIJrbovyRtI+GuOEa4XzFCEpZRAEoEI8u/cAHK+jG/PgUzQ==
+  dependencies:
+    "@babel/runtime" "^7.12.0"
+    "@emotion/cache" "^11.4.0"
+    "@emotion/react" "^11.8.1"
+    "@floating-ui/dom" "^1.0.1"
+    "@types/react-transition-group" "^4.4.0"
+    memoize-one "^6.0.0"
+    prop-types "^15.6.0"
+    react-transition-group "^4.3.0"
+    use-isomorphic-layout-effect "^1.1.2"
+
+react-select@^5.8.0:
+  version "5.8.0"
+  resolved "https://registry.yarnpkg.com/react-select/-/react-select-5.8.0.tgz#bd5c467a4df223f079dd720be9498076a3f085b5"
+  integrity sha512-TfjLDo58XrhP6VG5M/Mi56Us0Yt8X7xD6cDybC7yoRMUNm7BGO7qk8J0TLQOua/prb8vUOtsfnXZwfm30HGsAA==
   dependencies:
     "@babel/runtime" "^7.12.0"
     "@emotion/cache" "^11.4.0"
@@ -9442,10 +9469,10 @@ typed-array-length@^1.0.6:
     is-typed-array "^1.1.13"
     possible-typed-array-names "^1.0.0"
 
-typescript@^5.4.3:
-  version "5.4.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.4.3.tgz#5c6fedd4c87bee01cd7a528a30145521f8e0feff"
-  integrity sha512-KrPd3PKaCLr78MalgiwJnA25Nm8HAmdwN3mYUYZgG/wizIo9EainNVQI9/yDavtVFRN2h3k8uf3GLHuhDMgEHg==
+typescript@^5.5.2:
+  version "5.5.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.5.2.tgz#c26f023cb0054e657ce04f72583ea2d85f8d0507"
+  integrity sha512-NcRtPEOsPFFWjobJEtfihkLCZCXZt/os3zf8nTxjVH3RvTSxjrCamJpbExGvYOF+tFHc3pA65qpdwPbzjohhew==
 
 unbox-primitive@^1.0.2:
   version "1.0.2"

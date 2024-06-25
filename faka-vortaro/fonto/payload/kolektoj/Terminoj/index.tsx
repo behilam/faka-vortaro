@@ -12,6 +12,7 @@ import {
 import kreintoKajGxisdatiginto from "../../kampoj/kreintoKajModifinto";
 import kreitaKajGxisdatigita from "../../kampoj/kreitaKajModifita";
 import { Kol, KolGrupo } from "../nomoj";
+import CSVEnportilo from "./eroj/CSVEnportilo";
 import LingvojCxelo from "./eroj/cxeloj/lingvoj";
 
 const lingvoj = [
@@ -36,6 +37,9 @@ export const Terminoj: CollectionConfig = {
       "gxisdatiginto",
     ] satisfies (keyof Termino<0>)[],
     group: KolGrupo.Vortaro,
+    components: {
+      BeforeListTable: [CSVEnportilo],
+    },
   },
   labels: {
     plural: "Terminoj",
