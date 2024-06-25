@@ -58,6 +58,14 @@ const optimismaKongruigo = (csvTitoloj: string[]): NomKongruo => {
   return kongruitaj.filter(([, kongruo]) => typeof kongruo !== "undefined") as NomKongruo;
 };
 
+const troviDuoblan = (titoloj: string[]): string | undefined => {
+  return titoloj.find((titolo, i, titoloj) => {
+    for (let j = i + 1; j < titoloj.length; j++) {
+      if (titolo === titoloj[j]) return true;
+    }
+  });
+};
+
 const CSVEnportilo = () => {
   const { register: registriEnportilon, handleSubmit, watch } = useForm<EnportilKampoj>();
   const traktiEnporton: SubmitHandler<EnportilKampoj> = ({ csvEnporto }) => {
@@ -76,7 +84,26 @@ const CSVEnportilo = () => {
     legilo.onload = async e => {
       const rezulto = e.target?.result as string;
       const { data: vicoj } = Papa.parse<string[]>(rezulto, { skipEmptyLines: true });
-      csvTitolojn(vicoj[0]);
+      const trovitajCsvTitoloj = vicoj[0];
+
+      if (trovitajCsvTitoloj.length === 0) {
+        return enportEraron("CSV-dosiero ne enhavas kolumnojn.");
+      }
+      const vakaTitoloCxe = trovitajCsvTitoloj.findIndex(titolo => titolo.trim() === "");
+      if (vakaTitoloCxe >= 0) {
+        return enportEraron(
+          `Kolumno-nomo ne povas esti vaka. Kontrolu kolumnon: ${vakaTitoloCxe + 1}`
+        );
+      }
+      const trovitaDuoblaTitolo = troviDuoblan(trovitajCsvTitoloj);
+      if (typeof trovitaDuoblaTitolo === "string") {
+        return enportEraron(
+          `Ne povas aperi duoblaj kolumno-nomoj. Kontrolu: "${trovitaDuoblaTitolo}"`
+        );
+      }
+
+      enportEraron(undefined);
+      csvTitolojn(trovitajCsvTitoloj);
       const kongruoj = optimismaKongruigo(vicoj[0]);
       vakigiTitolojn();
       for (const kongruo of kongruoj) {
@@ -130,6 +157,7 @@ const CSVEnportilo = () => {
         />
       </form>
       <button onClick={() => legi()}>Read</button>
+      {enportEraro && <p className="text-red-500">{enportEraro}</p>}
       <form>
         <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
           {headers.map(header => {
