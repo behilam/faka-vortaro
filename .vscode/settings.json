@@ -1,5 +1,5 @@
 {
   "typescript.tsdk": "./faka-vortaro/faka-vortaro/node_modules/typescript/lib",
-  "eslint.workingDirectories": ["./faka-vortaro"],
+  "eslint.workingDirectories": ["./faka-vortaro/faka-vortaro"],
   "svg.preview.background": "transparent"
 }

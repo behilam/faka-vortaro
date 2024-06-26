@@ -1,15 +1,22 @@
 import { useMutation } from "@tanstack/react-query";
 import payloadAPI from "../payloadAPI";
-import { AldonManiero } from "../finpunktoj/kreiFinpunkton/helpiloj";
 import { TerminKampo } from "../finpunktoj/kreiFinpunkton/helpiloj";
 
-const useAlsxutiCsv = ({ onSettled }: { onSettled?: () => void } = {}) => {
+const useAlsxutiCsv = ({
+  onSettled,
+}: // postArAlsxuto, // TODO
+{ onSettled?: () => void; postArAlsxuto?: () => void } = {}) => {
   return useMutation({
-    mutationFn: async ({ kolumnoj, vicoj }: { kolumnoj: TerminKampo[]; vicoj: string[][] }) => {
+    mutationFn: async ({
+      kolumnoj,
+      vicoj,
+    }: {
+      kolumnoj: Record<TerminKampo, number | null>;
+      vicoj: string[][];
+    }) => {
       return await payloadAPI.terminoj.alsxutiCsv({
         kolumnoj,
         vicoj,
-        maniero: AldonManiero.KreiAuxGxisdatigi,
       });
     },
     onSettled: data => {

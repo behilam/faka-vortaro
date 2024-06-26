@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
 import Select from "react-select";
 import Papa from "papaparse";
 
@@ -56,12 +55,6 @@ const troviDuoblan = (titoloj: string[]): string | undefined => {
   });
 };
 
-//
-
-// const;
-
-//
-
 const CSVEnportilo = () => {
   const {
     register: registriEnportilon,
@@ -78,6 +71,7 @@ const CSVEnportilo = () => {
   const enportoj = observiEnporton("csvEnporto");
   const [csvTitoloj, csvTitolojn] = useState<string[]>([]);
   const [enportEraro, enportEraron] = useState<string>();
+  const [datumVicoj, datumVicojn] = useState<string[][]>([]);
 
   useEffect(() => {
     if (enportoj) legi(enportoj);
@@ -94,6 +88,7 @@ const CSVEnportilo = () => {
       legilo.onload = async e => {
         csvTitolojn([]);
         vakigiTitolojn();
+        datumVicojn([]);
         const rezulto = e.target?.result as string;
         const { data: vicoj } = Papa.parse<string[]>(rezulto, { skipEmptyLines: true });
         const trovitajCsvTitoloj = vicoj[0];
@@ -116,6 +111,7 @@ const CSVEnportilo = () => {
 
         enportEraron(undefined);
         csvTitolojn(trovitajCsvTitoloj);
+        datumVicojn(vicoj.slice(1));
         const kongruoj = optimismaKongruigo(vicoj[0]);
         for (const kongruo of kongruoj) {
           titolon(kongruo[0], { value: kongruo[0], label: kongruo[1] });
@@ -137,21 +133,23 @@ const CSVEnportilo = () => {
     })
     .map(header => ({ value: header as TerminKampo, label: header }));
 
-  const router = useHistory();
-
   const { mutate: alsxutiCsv } = useAlsxutiCsv({
-    onSettled: () => {
-      router.go(0);
-    },
+    onSettled: () => {},
+    postArAlsxuto: () => {},
   });
+  console.log(computedHeaders, "SAFopiuasdfiu");
 
   const traktiEnporton = () => {
+    const kolumnoj = Object.fromEntries(
+      Object.entries(computedHeaders).map(([kolumno, valoro]): [TerminKampo, number | null] => {
+        const indekso = csvTitoloj.findIndex(titolo => valoro?.label === titolo);
+        return [kolumno as TerminKampo, indekso < 0 ? null : indekso];
+      })
+    ) as Record<TerminKampo, number>;
+    console.log(kolumnoj, "Kolumnoj");
     alsxutiCsv({
-      kolumnoj: [TerminKampo.Termino, TerminKampo.Signifo],
-      vicoj: [
-        ["a", "Aaaaaa"],
-        ["b", "bBBbb"],
-      ],
+      kolumnoj,
+      vicoj: datumVicoj,
     });
   };
 

@@ -17,8 +17,7 @@ export const agordoj = {
   koletko: Kol.Terminoj,
   korpoAnalizilo: z.object({
     vicoj: z.array(z.array(z.string())),
-    kolumnoj: z.array(z.nativeEnum(TerminKampo)),
-    maniero: z.nativeEnum(AldonManiero),
+    kolumnoj: z.record(z.nativeEnum(TerminKampo), z.union([z.number(), z.null()])),
   }),
   resAnalizilo: z.object({
     kreitaj: z.number(),
@@ -30,7 +29,6 @@ export const agordoj = {
     ),
     ignoritaj: z.number(),
   }),
-  // resAnalizilo: z.string(),
 } satisfies KomunaFinpunktAgordo;
 
 export default kreiFinpunkton({
@@ -40,15 +38,7 @@ export default kreiFinpunkton({
     if (!uzanto) throw new Error("Vi devas esti ensalutinta por fari tion");
 
     const { kolumnoj, vicoj } = analizitaKorpo;
-    const troviKolumnNumeron = (kampo: TerminKampo): number | null => {
-      const indekso = kolumnoj.findIndex(k => k === kampo);
-      return indekso < 0 ? null : indekso;
-    };
-    const Indekso = Object.fromEntries(
-      Object.values(TerminKampo).map(kampo => [kampo, troviKolumnNumeron(kampo)])
-    ) as Record<TerminKampo, number | null>;
-
-    if (Indekso.termino === null) {
+    if (typeof kolumnoj.termino !== "number") {
       throw new Error("CSV-dosiero devas enhavi kolumnon por la termino");
     }
 
@@ -60,9 +50,11 @@ export default kreiFinpunkton({
 
     for (const [vicNumero, vico] of vicoj.entries()) {
       const Valoro = Object.fromEntries(
-        Object.values(TerminKampo).map<[TerminKampo, string | null]>(kampo =>
-          typeof Indekso[kampo] === "number" ? [kampo, vico[Indekso[kampo]]] : [kampo, null]
-        )
+        Object.values(TerminKampo)
+          .map<[TerminKampo, string | null]>(kampo =>
+            typeof kolumnoj[kampo] === "number" ? [kampo, vico[kolumnoj[kampo]]] : [kampo, null]
+          )
+          .map(([k, v]) => (k === TerminKampo.Termino ? [k, v?.toLowerCase()] : [k, v]))
       ) as Valoroj;
       try {
         if (!Valoro.termino) throw "Mankas termino";
