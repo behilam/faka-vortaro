@@ -9,6 +9,7 @@ import path from "path";
 
 import { Kol } from "./kolektoj/nomoj";
 import { Notoj, Terminoj, Uzantoj } from "./kolektoj";
+import Proviziloj from "./eroj/proviziloj";
 
 dayjs.locale(eoDayjs);
 
@@ -31,6 +32,9 @@ export default buildConfig({
         },
       },
     }),
+    components: {
+      providers: [Proviziloj],
+    },
   },
   editor: slateEditor({}),
   db: mongooseAdapter({
@@ -41,6 +45,7 @@ export default buildConfig({
   collections: [Uzantoj, Terminoj, Notoj],
   typescript: {
     outputFile: path.resolve(__dirname, "../tipoj/payload-tipoj.ts"),
+    declare: false,
   },
   graphQL: {
     schemaOutputFile: path.resolve(__dirname, "../tipoj/generita-skemo.graphql"),

@@ -8,7 +8,7 @@
 
 import { Subtrahi } from './utiltipoj';
 
-export interface Config {
+export interface Config<Profundo extends number = 2> {
   collections: {
     uzantoj: Uzanto;
     terminoj: Termino;
@@ -160,8 +160,6 @@ export interface PayloadMigration<Profundo extends number = 2> {
   createdAt: string;
 };
 
-
-/* Derivated types */
 export type Rolo = NonNullable<Uzanto<0>["roloj"]>[number];
 export type Signifo = NonNullable<Termino<0>["signifoj"]>[number];
 export type SignifoEkzemplo = NonNullable<Signifo["ekzemploj"]>[number];

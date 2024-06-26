@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+// import { Kol } from "../payload/kolektoj/nomoj";
 
 const kapMesagxo = /*ts*/ `
 /* tslint:disable */
@@ -28,19 +29,21 @@ const asertitajTipojDosiernomo = "payload-asertitaj-tipoj.ts";
 const tipujo = path.resolve(__dirname, "../tipoj");
 const eligvojo = path.resolve(tipujo, asertitajTipojDosiernomo);
 
+// const kolektoj = Object.values(Kol);
+
 try {
   const vaniltipoj = fs.readFileSync(`${tipujo}/payload-tipoj.ts`, "utf-8");
   const gxisdatigitajTipoj = vaniltipoj
-    .replace(/\/\*[^]+\*\/\r?\n\r?\n/g, "") // Remove initial ts-lint comment
-    .replace(/^export interface (\w+)/gm, "export interface $1<Profundo extends number = 2>") // Convert interfaces into types
-    .replace(/^}$/gm, "};") // Append semicolon to type end
-    .replace(/\binterface Config<.+>/, "interface Config") // Remove Profundo generic from Config type
+    .replace(/\/\*[^]+\*\/\r?\n\r?\n/g, "") // Forigi komencan ts-lint komenton
+    .replace(/^export interface (\w+)/gm, "export interface $1<Profundo extends number = 2>") // Konverti interfacojn en tipojn
+    .replace(/^}$/gm, "};") // Doni punktokomon al fino de tipo
     .replace(/: string \| ([A-Z]\w+);/g, ": Profundo extends 0 ? string : $1<Subtrahi<Profundo>>;")
     .replace(/: \(string \| null\) \| ([A-Z]\w+);/g, ": (Profundo extends 0 ? string : $1<Subtrahi<Profundo>>) | null;")
     .replace(/: string \| ([A-Z]\w+) \| null;/g, ": (Profundo extends 0 ? string : $1<Subtrahi<Profundo>>) | null;")
     .replace(/: \(string \| ([A-Z]\w+)\)\[\];/g, ": Profundo extends 0 ? string[] : $1<Subtrahi<Profundo>>[];")
     .replace(/: \(string \| ([A-Z]\w+)\)\[\] \| null;/g, ": (Profundo extends 0 ? string[] : $1<Subtrahi<Profundo>>[]) | null;")
-    .replace(/declare module 'payload'[^]*/m, "/* Derivated types */");
+    // .replace(new RegExp(`^(\\s{4}(?:${kolektoj.join("|")}): [A-Z]\\w+);`, "gm"), "$1<Profundo>;") // Aldoni ĝeneralilon Profundo al la kolekto Config
+    .replace(/declare module 'payload'[^]*/m, "/* Derivitaj tipoj */");
 
   const asertitajTipoj = `${kapMesagxo}\n\n${enportoj}\n\n${gxisdatigitajTipoj}${ekstrajTipoj}`;
   fs.writeFileSync(eligvojo, asertitajTipoj);

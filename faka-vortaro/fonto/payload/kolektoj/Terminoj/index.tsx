@@ -14,6 +14,7 @@ import kreitaKajGxisdatigita from "../../kampoj/kreitaKajModifita";
 import { Kol, KolGrupo } from "../nomoj";
 import CSVEnportilo from "./eroj/CSVEnportilo";
 import LingvojCxelo from "./eroj/cxeloj/lingvoj";
+import alsxutiCsv from "./finpunktoj/alsxutiCsv";
 
 const lingvoj = [
   { value: "de", label: "Germana - DE" },
@@ -225,4 +226,5 @@ export const Terminoj: CollectionConfig = {
     ...kreintoKajGxisdatiginto,
     ...kreitaKajGxisdatigita,
   ],
+  endpoints: [alsxutiCsv],
 };
