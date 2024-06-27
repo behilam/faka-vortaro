@@ -18,7 +18,6 @@ module.exports = async () => {
   };
 
   try {
-    console.log("REDIRECTING ===========");
     const redirectsRes = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/api/redirects?limit=1000&depth=1`
     );
@@ -70,7 +69,6 @@ module.exports = async () => {
     }
 
     const redirects = [internetExplorerRedirect, ...dynamicRedirects];
-    console.log({ redirects });
 
     return redirects;
   } catch (error) {

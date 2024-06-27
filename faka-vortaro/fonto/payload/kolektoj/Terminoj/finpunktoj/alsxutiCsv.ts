@@ -51,9 +51,6 @@ export default kreiFinpunkton({
     const malsukcesaj: { vico: number; termino: string; kialo: string }[] = [];
     let ignoritaj = 0;
     const TerminModelo = mongoose.model<Termino<0>>(Kol.Terminoj);
-    console.log(vicoj, "VICOJ");
-
-    if (vicarNumero % 3 === 0) throw new Error("Npit");
 
     for (const [vicNumero, vico] of vicoj.entries()) {
       const Valoro = Object.fromEntries(
@@ -87,31 +84,38 @@ export default kreiFinpunkton({
             })
             .map(
               ([kampo, valoro]) =>
-                [kampo, [{ traduko: valoro }]] satisfies [
+                [kampo, [{ traduko: valoro.trim() }]] satisfies [
                   keyof Tradukoj,
                   NonNullable<Tradukoj[keyof Tradukoj]>
                 ]
             )
         ) as Partial<Record<keyof Tradukoj, [{ traduko: string }]>>;
 
-        const trovitaTermino = await TerminModelo.findOneAndUpdate(
+        const ekzistintaTermino = await TerminModelo.findOneAndUpdate(
           { termino: { $eq: Valoro.termino } },
           {
             $setOnInsert: {
               kreinto: uzanto.id,
-              termino: Valoro.termino,
-              signifoj: [{ signifo: Valoro.signifo }],
+              termino: Valoro.termino.trim(),
+              signifoj: [{ signifo: Valoro.signifo.trim() }],
               lingvoj: tradukoj,
             } satisfies OmitMeta<Termino<0>>,
           },
           { upsert: true, lean: true }
         );
 
-        if (trovitaTermino === null) {
+        if (ekzistintaTermino === null) {
           kreitaj++;
         } else ignoritaj++;
 
-        console.log("DONE ==============");
+        console.info(
+          "Alŝutitaj terminoj. Kreitaj:",
+          kreitaj,
+          "Ignoritaj: ",
+          ignoritaj,
+          "Malsukcesaj: ",
+          malsukcesaj.length
+        );
       } catch (eraro) {
         console.error("Eraro dum enporto de CSV-dosiero", eraro);
         const kialo = typeof eraro === "string" ? eraro : "Eraro nekonata";

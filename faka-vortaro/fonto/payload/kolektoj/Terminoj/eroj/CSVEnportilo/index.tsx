@@ -99,7 +99,7 @@ const CSVEnportilo = (props: unknown) => {
   const legi = useCallback(
     (enportoj: FileList) => {
       const Dosiero = enportoj.item(0);
-      if (!Dosiero) return console.log("Neniu dosiero elektita");
+      if (!Dosiero) return console.info("Neniu dosiero elektita");
 
       const legilo = new FileReader();
       legilo.readAsText(Dosiero);
@@ -153,7 +153,7 @@ const CSVEnportilo = (props: unknown) => {
     })
     .map(header => ({ value: header as TerminKampo, label: header }));
 
-  const { mutate: alsxutiCsv, error: servilEraro } = useAlsxutiCsv({
+  const { mutate: alsxutiCsv } = useAlsxutiCsv({
     onSuccess: rezulto => {
       alsxutRezultojn(antaŭaRezulto => {
         const malsukcesaj = antaŭaRezulto
@@ -177,10 +177,6 @@ const CSVEnportilo = (props: unknown) => {
       vicarNumeron(a => (a ?? 0) + 1);
     },
     onError: (err, { vicarNumero, opo }) => {
-      if (isAxiosError(err)) {
-        err.status === HttpStatusCode.InternalServerError;
-        console.log(err.status, "SADFpsuadfiopasdf");
-      }
       servilErarojn(a => a.concat({ vicarNumero, opo, mesagxo: err.message }));
     },
   });
@@ -210,12 +206,12 @@ const CSVEnportilo = (props: unknown) => {
   };
   useEffect(() => {
     if (typeof vicarNumero === "undefined") return;
-    const opo = 2;
+    const opo = 100;
     const vicaro = datumVicoj.slice(vicarNumero * opo, (vicarNumero + 1) * opo);
     if (vicaro.length > 0) {
       alsxutiCsv({ kolumnoj, vicoj: vicaro, vicarNumero, opo });
     } else {
-      console.log("Fino de la CSV-dosiero");
+      console.info("Fino de la CSV-dosiero");
       vicarNumeron(undefined);
     }
   }, [vicarNumero]);
@@ -274,7 +270,12 @@ const CSVEnportilo = (props: unknown) => {
               </h4>
               <div className="text-zinc-700 dark:text-zinc-300 mx-2">
                 <p className="my-0">Kreitaj: {alsxutRezultoj.kreitaj}</p>
-                <p className="my-0">Ignoritaj: {alsxutRezultoj.ignoritaj}</p>
+                <p className="my-0">
+                  Ignoritaj: {alsxutRezultoj.ignoritaj}
+                  {alsxutRezultoj.ignoritaj > 0 && (
+                    <span className="mx-2 text-zinc-500">(ĉar la termino jam ekzistis)</span>
+                  )}
+                </p>
                 <p className="my-0">Malsukcesaj: {malsukcesojEntute}</p>
                 {malsukcesojEntute > 0 && (
                   <div className="overflow-scroll max-h-64 font-mono h-fit bg-zinc-800 px-4 py-2 text-zinc-300">
@@ -317,6 +318,10 @@ const CSVEnportilo = (props: unknown) => {
           ) : (
             <>
               <h4 className="my-0">Elektu la respektivajn kolumno-nomojn</h4>
+              <div className="mx-2 text-zinc-500">
+                La <span className="font-bold">unua vico</span> de la CSV devas enhavi la
+                <span className="font-bold"> kolumno-nomojn</span>
+              </div>
               <form>
                 <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
                   {Object.values(TerminKampo).map(header => {
