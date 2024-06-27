@@ -6,10 +6,20 @@ import { Rezulto } from "../../kolektoj/Terminoj/finpunktoj/alsxutiCsv";
 const useAlsxutiCsv = ({
   onSuccess,
   onSettled,
+  onError,
 }: {
   onSuccess?: (data: Rezulto) => void;
   onSettled?: (data: Rezulto | undefined) => void;
-  postArAlsxuto?: (rezulto: Rezulto) => void;
+  onError?: (
+    error: Error,
+    variables: {
+      kolumnoj: Record<TerminKampo, number | null>;
+      vicoj: string[][];
+      vicarNumero: number;
+      opo: number;
+    },
+    context: unknown
+  ) => void;
 } = {}) => {
   return useMutation({
     mutationFn: async ({
@@ -35,6 +45,10 @@ const useAlsxutiCsv = ({
     },
     onSettled: data => {
       onSettled?.(data);
+    },
+    onError: (eraro, variabloj, kunteksto) => {
+      console.error("Eraro dum alsxuto de CSV-dosiero", eraro);
+      onError?.(eraro, variabloj, kunteksto);
     },
   });
 };

@@ -53,6 +53,8 @@ export default kreiFinpunkton({
     const TerminModelo = mongoose.model<Termino<0>>(Kol.Terminoj);
     console.log(vicoj, "VICOJ");
 
+    if (vicarNumero % 3 === 0) throw new Error("Npit");
+
     for (const [vicNumero, vico] of vicoj.entries()) {
       const Valoro = Object.fromEntries(
         Object.values(TerminKampo)

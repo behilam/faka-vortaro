@@ -10,6 +10,7 @@ import useAlsxutiCsv from "../../../../helpiloj/mutacioj/useAlsxutiCsv";
 
 import "./stilo.scss";
 import { Rezulto as AlsxutRezulto } from "../../finpunktoj/alsxutiCsv";
+import { HttpStatusCode, isAxiosError } from "axios";
 
 interface EnportilKampoj {
   csvEnporto: FileList | undefined;
@@ -61,12 +62,7 @@ const troviDuoblan = (titoloj: string[]): string | undefined => {
 const maksimumajMalsukcesoj = 10;
 
 const CSVEnportilo = (props: unknown) => {
-  console.log(props, "FKasoefi");
-  const {
-    register: registriEnportilon,
-    handleSubmit: traktiEnportilon,
-    watch: observiEnporton,
-  } = useForm<EnportilKampoj>();
+  const { register: registriEnportilon, watch: observiEnporton } = useForm<EnportilKampoj>();
   const {
     watch: observiTitolojn,
     control: titolKontrolilo,
@@ -76,13 +72,21 @@ const CSVEnportilo = (props: unknown) => {
 
   const enportoj = observiEnporton("csvEnporto");
   const [csvTitoloj, csvTitolojn] = useState<string[]>([]);
+  const [datumVicoj, datumVicojn] = useState<string[][]>([]);
+
   const [enportEraro, enportEraron] = useState<string>();
   const [alsxutEraro, alsxutEraron] = useState<string>();
-  const [datumVicoj, datumVicojn] = useState<string[][]>([]);
+  const [servilEraroj, servilErarojn] = useState<
+    {
+      vicarNumero: number;
+      opo: number;
+      mesagxo: string;
+    }[]
+  >([]);
 
   const [vicarNumero, vicarNumeron] = useState<number>();
   const [alsxutRezultoj, alsxutRezultojn] = useState<
-    (AlsxutRezulto & { ekstrajMalsukcesoj: number }) | undefined
+    AlsxutRezulto & { ekstrajMalsukcesoj: number }
   >();
 
   const router = useHistory();
@@ -149,7 +153,7 @@ const CSVEnportilo = (props: unknown) => {
     })
     .map(header => ({ value: header as TerminKampo, label: header }));
 
-  const { mutate: alsxutiCsv } = useAlsxutiCsv({
+  const { mutate: alsxutiCsv, error: servilEraro } = useAlsxutiCsv({
     onSuccess: rezulto => {
       alsxutRezultojn(antaŭaRezulto => {
         const malsukcesaj = antaŭaRezulto
@@ -168,7 +172,16 @@ const CSVEnportilo = (props: unknown) => {
           ekstrajMalsukcesoj,
         };
       });
+    },
+    onSettled: () => {
       vicarNumeron(a => (a ?? 0) + 1);
+    },
+    onError: (err, { vicarNumero, opo }) => {
+      if (isAxiosError(err)) {
+        err.status === HttpStatusCode.InternalServerError;
+        console.log(err.status, "SADFpsuadfiopasdf");
+      }
+      servilErarojn(a => a.concat({ vicarNumero, opo, mesagxo: err.message }));
     },
   });
 
@@ -197,7 +210,7 @@ const CSVEnportilo = (props: unknown) => {
   };
   useEffect(() => {
     if (typeof vicarNumero === "undefined") return;
-    const opo = 20;
+    const opo = 2;
     const vicaro = datumVicoj.slice(vicarNumero * opo, (vicarNumero + 1) * opo);
     if (vicaro.length > 0) {
       alsxutiCsv({ kolumnoj, vicoj: vicaro, vicarNumero, opo });
@@ -255,6 +268,9 @@ const CSVEnportilo = (props: unknown) => {
                   {" "}
                   / {datumVicojEntute}
                 </span>
+                {servilEraroj.length > 0 && (
+                  <span className="mx-2 text-red-500">Okazis servileraroj</span>
+                )}
               </h4>
               <div className="text-zinc-700 dark:text-zinc-300 mx-2">
                 <p className="my-0">Kreitaj: {alsxutRezultoj.kreitaj}</p>
@@ -270,14 +286,27 @@ const CSVEnportilo = (props: unknown) => {
                       ))}
                     </div>
                     {alsxutRezultoj.ekstrajMalsukcesoj > 0 && (
-                      <div>Kaj {alsxutRezultoj.ekstrajMalsukcesoj} aliaj</div>
+                      <div>Kaj {alsxutRezultoj.ekstrajMalsukcesoj} pli...</div>
                     )}
                   </div>
                 )}
               </div>
+              {servilEraroj.length > 0 && (
+                <div className="mt-3">
+                  <h4 className="my-0">Servil-eraroj</h4>
+                  <div className="overflow-scroll max-h-64 font-mono h-fit bg-zinc-800 px-4 py-2 text-zinc-300">
+                    <div className="mx-2">
+                      {servilEraroj.map(({ mesagxo, opo, vicarNumero }) => (
+                        <div key={vicarNumero}>
+                          [{vicarNumero * opo + 2} - {(vicarNumero + 1) * opo + 1}]: {mesagxo}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
               <button
                 onClick={() => {
-                  // alsxutRezultojn(undefined);
                   router.go(0);
                 }}
                 className="btn btn--style-primary btn--icon-style-without-border btn--size-small btn--icon-position-right"
