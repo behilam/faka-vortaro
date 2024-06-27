@@ -18,6 +18,8 @@ export const agordoj = {
   korpoAnalizilo: z.object({
     vicoj: z.array(z.array(z.string())),
     kolumnoj: z.record(z.nativeEnum(TerminKampo), z.union([z.number(), z.null()])),
+    vicarNumero: z.number().min(0),
+    opo: z.number().min(1),
   }),
   resAnalizilo: z.object({
     kreitaj: z.number(),
@@ -25,11 +27,14 @@ export const agordoj = {
       z.object({
         vico: z.number(),
         termino: z.string(),
+        kialo: z.string(),
       })
     ),
     ignoritaj: z.number(),
   }),
 } satisfies KomunaFinpunktAgordo;
+
+export type Rezulto = z.infer<(typeof agordoj)["resAnalizilo"]>;
 
 export default kreiFinpunkton({
   agordoj,
@@ -37,7 +42,7 @@ export default kreiFinpunkton({
     const uzanto = req.user;
     if (!uzanto) throw new Error("Vi devas esti ensalutinta por fari tion");
 
-    const { kolumnoj, vicoj } = analizitaKorpo;
+    const { kolumnoj, vicoj, vicarNumero, opo } = analizitaKorpo;
     if (typeof kolumnoj.termino !== "number") {
       throw new Error("CSV-dosiero devas enhavi kolumnon por la termino");
     }
@@ -57,8 +62,8 @@ export default kreiFinpunkton({
           .map(([k, v]) => (k === TerminKampo.Termino ? [k, v?.toLowerCase()] : [k, v]))
       ) as Valoroj;
       try {
-        if (!Valoro.termino) throw "Mankas termino";
-        if (!Valoro.signifo) throw "Mankas signifo";
+        if (!Valoro.termino?.trim()) throw "Mankas termino";
+        if (!Valoro.signifo?.trim()) throw "Mankas signifo";
 
         const tradukoj = Object.fromEntries(
           Object.entries(Valoro)
@@ -109,8 +114,8 @@ export default kreiFinpunkton({
         console.error("Eraro dum enporto de CSV-dosiero", eraro);
         const kialo = typeof eraro === "string" ? eraro : "Eraro nekonata";
         malsukcesaj.push({
-          vico: vicNumero + 2,
-          termino: Valoro.termino || "<sen termino>",
+          vico: vicarNumero * opo + vicNumero + 2,
+          termino: Valoro.termino?.trim() || "<sen termino>",
           kialo,
         });
       }
